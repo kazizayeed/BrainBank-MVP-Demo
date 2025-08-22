@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrainBank — MVP Demo</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="theme-dark">
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">💡</div>
+      <div class="brand-text">
+        <h1>BrainBank</h1>
+        <p class="tag">Deposit knowledge, invest in yourself.</p>
+      </div>
+    </div>
+    <nav class="nav">
+      <button data-route="home" class="nav-link active">Home</button>
+      <button data-route="dashboard" class="nav-link" id="nav-dashboard" disabled>Dashboard</button>
+      <button data-route="leaderboard" class="nav-link" id="nav-leaderboard" disabled>Leaderboard</button>
+      <button data-route="profile" class="nav-link" id="nav-profile" disabled>Profile</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HOME / LANDING -->
+    <section id="home" class="route visible">
+      <div class="hero">
+        <h2>Make finance & economics fun.</h2>
+        <p>Play quick challenges, earn coins, and level up your money smarts. This is a local, offline demo—no accounts needed.</p>
+      </div>
+
+      <div class="card login-card">
+        <h3>Start the demo</h3>
+        <form id="demo-login">
+          <label for="name">Your name</label>
+          <input id="name" name="name" placeholder="e.g., Alex" required />
+          <button type="submit" class="btn primary">Enter</button>
+        </form>
+        <p class="fineprint">We store progress only in your browser (localStorage). Clear it anytime from Profile → Reset.</p>
+      </div>
+
+      <div class="grid features">
+        <div class="feature">
+          <h4>🎯 Daily Challenge</h4>
+          <p>Answer one bite‑size question a day to keep your streak alive.</p>
+        </div>
+        <div class="feature">
+          <h4>🪙 Coins & Levels</h4>
+          <p>Earn coins for correct answers and climb through levels.</p>
+        </div>
+        <div class="feature">
+          <h4>🏆 Leaderboard (Local)</h4>
+          <p>Compare with demo players on your device. It’s just for fun!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="route">
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-label">Coins</div>
+          <div class="stat-value" id="stat-coins">0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Level</div>
+          <div class="stat-value" id="stat-level">1</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Streak</div>
+          <div class="stat-value" id="stat-streak">0🔥</div>
+        </div>
+      </div>
+
+      <div class="grid two">
+        <div class="card">
+          <h3>Daily Challenge</h3>
+          <p id="daily-status">Ready for today’s question?</p>
+          <button id="btn-play-daily" class="btn primary">Play now</button>
+        </div>
+
+        <div class="card">
+          <h3>Quick Quiz</h3>
+          <p>3 random questions. +10 coins for each correct answer.</p>
+          <button id="btn-play-quiz" class="btn">Start 3‑Q Quiz</button>
+        </div>
+      </div>
+
+      <div class="card lessons">
+        <div class="lessons-header">
+          <h3>Lessons</h3>
+          <div class="filters">
+            <select id="lesson-filter">
+              <option value="all">All</option>
+              <option value="basics">Basics</option>
+              <option value="banking">Banking</option>
+              <option value="investing">Investing</option>
+            </select>
+            <input id="lesson-search" placeholder="Search lessons..." />
+          </div>
+        </div>
+        <div id="lesson-list" class="lesson-list"></div>
+      </div>
+    </section>
+
+    <!-- LEADERBOARD -->
+    <section id="leaderboard" class="route">
+      <div class="card">
+        <h3>Local Leaderboard</h3>
+        <p class="fineprint">Saved in your browser only. Add some demo players below to compare!</p>
+        <div class="add-player">
+          <input id="lb-name" placeholder="Name" />
+          <input id="lb-coins" type="number" placeholder="Coins" />
+          <button id="lb-add" class="btn">Add</button>
+        </div>
+        <table class="table" id="lb-table">
+          <thead>
+            <tr><th>#</th><th>Name</th><th>Coins</th><th>Level</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- PROFILE -->
+    <section id="profile" class="route">
+      <div class="card">
+        <h3>Profile</h3>
+        <div class="profile-row">
+          <label>Name</label>
+          <input id="profile-name" />
+        </div>
+        <div class="profile-actions">
+          <button id="btn-save-profile" class="btn">Save</button>
+          <button id="btn-reset" class="btn danger">Reset all demo data</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- QUIZ MODAL -->
+  <div id="quiz-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="quiz-title">
+    <div class="modal-content">
+      <div class="modal-head">
+        <h3 id="quiz-title">Quick Quiz</h3>
+        <button id="quiz-close" class="icon-btn" aria-label="Close">✕</button>
+      </div>
+      <div id="quiz-body" class="quiz-body">
+        <!-- dynamic -->
+      </div>
+      <div class="modal-foot">
+        <button id="quiz-next" class="btn primary">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> BrainBank — MVP Demo</p>
+  </footer>
+
+  <!-- Linked JS file -->
+  <script src="app.js" defer></script>
+</body>
+</html>
