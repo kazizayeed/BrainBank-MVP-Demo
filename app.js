@@ -130,7 +130,7 @@
 
     const today = new Date().toDateString();
     const played = state.user.lastDaily === today;
-    $('#daily-status').textContent = played ? "You've completed today’s challenge. Come back tomorrow!" : "Ready for today’s question?";
+    $('#daily-status').textContent = played ? "You've completed today's challenge. Come back tomorrow!" : "Ready for today's question?";
     $('#btn-play-daily').disabled = played;
   }
 
