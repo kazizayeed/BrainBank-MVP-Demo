@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BrainBank — MVP Demo</title>
-  <link rel="stylesheet" href="styles.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body class="theme-dark">
   <header class="topbar">
@@ -19,19 +19,19 @@
       </div>
     </div>
     <nav class="nav">
-      <button data-route="home" class="nav-link active">Home</button>
-      <button data-route="dashboard" class="nav-link" id="nav-dashboard" disabled>Dashboard</button>
-      <button data-route="leaderboard" class="nav-link" id="nav-leaderboard" disabled>Leaderboard</button>
-      <button data-route="profile" class="nav-link" id="nav-profile" disabled>Profile</button>
+      <button data-route="home" class="nav-link active"><span>Home</span></button>
+      <button data-route="dashboard" class="nav-link" id="nav-dashboard" disabled><span>Dashboard</span></button>
+      <button data-route="simulator" class="nav-link" id="nav-simulator" disabled><span>Simulator</span></button>
+      <button data-route="leaderboard" class="nav-link" id="nav-leaderboard" disabled><span>Leaderboard</span></button>
+      <button data-route="profile" class="nav-link" id="nav-profile" disabled><span>Profile</span></button>
     </nav>
   </header>
 
   <main>
-    <!-- HOME / LANDING -->
     <section id="home" class="route visible">
       <div class="hero">
         <h2>Make finance & economics fun.</h2>
-        <p>Play quick challenges, earn coins, and level up your money smarts. This is a local, offline demo—no accounts needed.</p>
+        <p>Play quick challenges, earn coins, and level up your money smarts with real-world investment simulations.</p>
       </div>
 
       <div class="card login-card">
@@ -41,7 +41,7 @@
           <input id="name" name="name" placeholder="e.g., Alex" required />
           <button type="submit" class="btn primary">Enter</button>
         </form>
-        <p class="fineprint">We store progress only in your browser (localStorage). Clear it anytime from Profile → Reset.</p>
+        <p class="fineprint">We store progress only in your browser. Clear it anytime from Profile → Reset.</p>
       </div>
 
       <div class="grid features">
@@ -50,17 +50,16 @@
           <p>Answer one bite‑size question a day to keep your streak alive.</p>
         </div>
         <div class="feature">
-          <h4>🪙 Coins & Levels</h4>
-          <p>Earn coins for correct answers and climb through levels.</p>
+          <h4>📈 Investment Simulator</h4>
+          <p>Make real financial decisions and see the long-term impact of your choices.</p>
         </div>
         <div class="feature">
-          <h4>🏆 Leaderboard (Local)</h4>
-          <p>Compare with demo players on your device. It’s just for fun!</p>
+          <h4>🏆 Gamified Learning</h4>
+          <p>Earn coins, unlock rewards, and climb the leaderboard while learning.</p>
         </div>
       </div>
     </section>
 
-    <!-- DASHBOARD -->
     <section id="dashboard" class="route">
       <div class="stats">
         <div class="stat">
@@ -75,12 +74,16 @@
           <div class="stat-label">Streak</div>
           <div class="stat-value" id="stat-streak">0🔥</div>
         </div>
+        <div class="stat">
+          <div class="stat-label">Portfolio Value</div>
+          <div class="stat-value" id="stat-portfolio">$0</div>
+        </div>
       </div>
 
-      <div class="grid two">
+      <div class="grid three">
         <div class="card">
           <h3>Daily Challenge</h3>
-          <p id="daily-status">Ready for today’s question?</p>
+          <p id="daily-status">Ready for today's question?</p>
           <button id="btn-play-daily" class="btn primary">Play now</button>
         </div>
 
@@ -88,6 +91,12 @@
           <h3>Quick Quiz</h3>
           <p>3 random questions. +10 coins for each correct answer.</p>
           <button id="btn-play-quiz" class="btn">Start 3‑Q Quiz</button>
+        </div>
+
+        <div class="card glow">
+          <h3>Investment Simulator</h3>
+          <p>Make real financial decisions and watch your money grow over time.</p>
+          <button id="btn-open-simulator" class="btn investment">Try Simulator</button>
         </div>
       </div>
 
@@ -108,7 +117,75 @@
       </div>
     </section>
 
-    <!-- LEADERBOARD -->
+    <section id="simulator" class="route">
+        <div class="investment-simulator">
+            <div class="scenario-header">
+                <h3>💰 Investment Decision Simulator</h3>
+                <p>Experience real financial choices and their long-term impact</p>
+            </div>
+    
+            <div class="scenario-story" id="scenario-story">
+                <h4>🎯 Your Scenario</h4>
+                <p id="scenario-text">You just earned $20 from a side hustle! You've been wanting those new sneakers for weeks, but you've also been learning about investing. What will you choose?</p>
+            </div>
+    
+            <div class="choices" id="investment-choices">
+                <div class="choice-card spend" data-choice="spend">
+                    <span class="choice-icon">👟</span>
+                    <h4>Buy the Sneakers</h4>
+                    <p>Get instant satisfaction with those trendy sneakers. You'll look great, but the money will be gone.</p>
+                    <div class="choice-result">
+                        <strong>Result:</strong> $0 remaining
+                    </div>
+                </div>
+                
+                <div class="choice-card invest" data-choice="invest">
+                    <span class="choice-icon">📈</span>
+                    <h4>Invest in a Stock Fund</h4>
+                    <p>Put your money into a diversified stock fund. It might grow over time, but there's always some risk involved.</p>
+                    <div class="choice-result">
+                        <strong>Potential:</strong> $20 → ???
+                    </div>
+                </div>
+            </div>
+    
+            <div class="investment-progress hidden" id="investment-progress">
+                <div class="progress-header">
+                    <h4>Your Investment Journey</h4>
+                </div>
+    
+                <div class="time-controls">
+                    <button class="time-btn active" data-time="1">1 Year</button>
+                    <button class="time-btn" data-time="5">5 Years</button>
+                    <button class="time-btn" data-time="10">10 Years</button>
+                    <button class="time-btn" data-time="20">20 Years</button>
+                </div>
+    
+                <div class="investment-chart">
+                    <div class="chart-line" id="chart-line" style="height: 10%;"></div>
+                    <div class="chart-value" id="chart-value">$20.00</div>
+                </div>
+    
+                <div class="rewards" id="investment-rewards">
+                    <div class="reward" data-milestone="25"><div>🎯</div><div>First Gain<br>$25+</div></div>
+                    <div class="reward" data-milestone="50"><div>🚀</div><div>Growing<br>$50+</div></div>
+                    <div class="reward" data-milestone="100"><div>💎</div><div>Century Club<br>$100+</div></div>
+                    <div class="reward" data-milestone="200"><div>👑</div><div>Investment Pro<br>$200+</div></div>
+                </div>
+    
+                <div class="scenario-comparison" id="scenario-comparison">
+                    <h4>The Power of Compound Growth</h4>
+                    <p id="comparison-text">After 1 year, your initial $20 investment has grown to $21.40. Had you bought the sneakers, you would have $0. This small choice has already made a difference!</p>
+                </div>
+            </div>
+    
+            <div class="scenario-actions">
+                <button id="btn-make-choice" class="btn primary" disabled>Make Your Choice</button>
+                <button id="btn-reset-scenario" class="btn" style="display: none;">Try New Scenario</button>
+            </div>
+        </div>
+    </section>
+
     <section id="leaderboard" class="route">
       <div class="card">
         <h3>Local Leaderboard</h3>
@@ -120,19 +197,18 @@
         </div>
         <table class="table" id="lb-table">
           <thead>
-            <tr><th>#</th><th>Name</th><th>Coins</th><th>Level</th></tr>
+            <tr><th>#</th><th>Name</th><th>Coins</th><th>Level</th><th>Portfolio</th></tr>
           </thead>
           <tbody></tbody>
         </table>
       </div>
     </section>
 
-    <!-- PROFILE -->
     <section id="profile" class="route">
       <div class="card">
         <h3>Profile</h3>
         <div class="profile-row">
-          <label>Name</label>
+          <label for="profile-name">Name</label>
           <input id="profile-name" />
         </div>
         <div class="profile-actions">
@@ -143,7 +219,6 @@
     </section>
   </main>
 
-  <!-- QUIZ MODAL -->
   <div id="quiz-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="quiz-title">
     <div class="modal-content">
       <div class="modal-head">
@@ -151,8 +226,7 @@
         <button id="quiz-close" class="icon-btn" aria-label="Close">✕</button>
       </div>
       <div id="quiz-body" class="quiz-body">
-        <!-- dynamic -->
-      </div>
+        </div>
       <div class="modal-foot">
         <button id="quiz-next" class="btn primary">Next</button>
       </div>
@@ -160,10 +234,10 @@
   </div>
 
   <footer class="footer">
-    <p>© <span id="year"></span> BrainBank — MVP Demo</p>
+    <p>© <span id="year"></span> BrainBank — Enhanced MVP Demo</p>
   </footer>
 
-  <!-- Linked JS file -->
-  <script src="app.js" defer></script>
+   <script src="app.js" defer></script>
+
 </body>
 </html>
